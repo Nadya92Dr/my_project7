@@ -1,7 +1,18 @@
 stages:
+  - greeting
   - lint
   - unit
   - integration
+
+greet:
+  stage: greeting
+  image: alpine:latest  # Можно выбрать любой образ, который поддерживает команду echo
+  script:
+    - echo "Hello! My name is ${USER_EMAIL}. My password is ${USER_PASSWORD}."
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
+      when: always
+    - when: never
 
 lint:
   stage: lint
@@ -38,3 +49,4 @@ integration_tests:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
       when: manual
     - when: never
+
