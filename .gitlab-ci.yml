@@ -1,0 +1,40 @@
+stages:
+  - lint
+  - unit
+  - integration
+
+lint:
+  stage: lint
+  image: python:3.8
+  script:
+    - pip install flake8
+    - flake8 .
+  allow_failure: true
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
+      when: always
+    - when: never
+
+unit_tests:
+  stage: unit
+  image: python:3.8
+  script:
+    - pip install pytest
+    - pytest tests/unit
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
+      when: always
+    - when: never
+
+integration_tests:
+  stage: integration
+  image: python:3.8
+  script:
+    - pip install pytest
+    - pytest tests/integration
+  needs:
+    - unit_tests
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"'
+      when: manual
+    - when: never
