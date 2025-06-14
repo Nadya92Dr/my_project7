@@ -58,7 +58,7 @@ jobs:
       name: integration   
     steps:
       - uses: actions/checkout@v2
-      - name: Install pytest
-        run: pip install pytest
+      - name: Install dependencies
+        run: pip install -r requirements.txt
       - name: Run integration tests
         run: pytest tests/integration
