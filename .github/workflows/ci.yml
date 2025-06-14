@@ -43,8 +43,8 @@ jobs:
       image: python:3.8
     steps:
       - uses: actions/checkout@v2
-      - name: Install pytest
-        run: pip install pytest
+      - name: Install dependencies
+        run: pip install -r requirements.txt
       - name: Run unit tests
         run: pytest tests/unit
 
