@@ -16,7 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: alpine:latest
-    if: github.ref == 'refs/heads/master' || github.event.pull_request.base.ref == 'master'
     env:
       USER_EMAIL: ${{ secrets.USER_EMAIL }}
       USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
@@ -29,7 +28,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: python:3.8
-    if: github.ref == 'refs/heads/master' || github.event.pull_request.base.ref == 'master'
     continue-on-error: true     
     steps:
       - uses: actions/checkout@v2
@@ -43,7 +41,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: python:3.8
-    if: github.ref == 'refs/heads/master' || github.event.pull_request.base.ref == 'master'
     steps:
       - uses: actions/checkout@v2
       - name: Install pytest
@@ -57,7 +54,6 @@ jobs:
     container:
       image: python:3.8
     needs: unit_tests
-    if: github.ref == 'refs/heads/master'  
     environment:
       name: integration   
     steps:
